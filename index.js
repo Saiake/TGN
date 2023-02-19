@@ -10,19 +10,11 @@ const bot = new Telegraf(token);
 
 bot.start((ctx) => {
     let obj = new ExcelReader
-    obj.canBuy(ExcelReader.mainArray, [0,0,0], [20,20,20])
+    obj.canBuy(ExcelReader.mainArray, [0,0,0], [30,30,30])
     ctx.reply('Send me ')
 });
 bot.help((ctx) => ctx.reply('Send me a sticker'));
 bot.on('sticker', (ctx) => ctx.reply('👍'));
 bot.hears('hi', (ctx) => ctx.reply('Hey there'));
 
-bot.launch({
-    webhook: {
-      // Public domain for webhook; e.g.: example.com
-      domain: "https://0433-185-11-4-194.eu.ngrok.io",
-  
-      // Port to listen on; e.g.: 8080
-      port: 80,
-    },
-  });
+bot.launch();
