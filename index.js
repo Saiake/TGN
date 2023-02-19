@@ -20,7 +20,7 @@ bot.hears('hi', (ctx) => ctx.reply('Hey there'));
 bot.launch({
     webhook: {
       // Public domain for webhook; e.g.: example.com
-      domain: "https://telegram-bot-ms85.onrender.com",
+      domain: "https://telegram-bot-0jzz.onrender.com",
   
       // Port to listen on; e.g.: 8080
       port: 8080,
