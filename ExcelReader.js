@@ -15,16 +15,18 @@ class ExcelReader {
     static getData(filename) {
         const file = XLSX.readFile(filename)
         const sheets = file.SheetNames
-        let data = new Map()
+        let data = []
         for (let i = 1; i < sheets.length; i++) {
             const temp = XLSX.utils.sheet_to_json(
                 file.Sheets[file.SheetNames[i]])
-            data.set(temp, file.SheetNames[i])
+            for (let j = 0; j < temp.length; j++)
+                temp[j].type = file.SheetNames[i]
+            data = data.concat(temp)
         }
         ExcelReader.mainArray = data
     }
 
-    async canBuy(candidates, params, wanted) {
+    canBuy(candidates, params, wanted) {
         let sum = []
         for (let i = 0; i < params.length; i++) {
             sum[i] = wanted[i] - params[i]
@@ -58,8 +60,29 @@ class ExcelReader {
         || (target1 == 0 && target2 > 0 && target3 == 0 && count < 6)
         || (target1 == 0 && target2 == 0 && target3 > 0 && count < 6)
         || (target1 > 0 && target2 > 0 && target3 > 0 && count < 6)
+        || (target1 == 0 && target2 > 0 && target3 > 0 && count < 6)
+        || (target1 > 0 && target2 == 0 && target3 > 0 && count < 6)
+        || (target1 > 0 && target2 > 0 && target3 == 0 && count < 6)
         ) {
-            candidates.forEach((key, value) => {
+            for (let j = i; j < candidates.length; j++) {
+                subArr.push(new Map())
+                subArr[subArr.length - 1].set('type', candidates[j]['type'])
+                subArr[subArr.length - 1].set(0, candidates[j]['Сила'])
+                subArr[subArr.length - 1].set(1, candidates[j]['Стамина'])
+                subArr[subArr.length - 1].set(2, candidates[j]['Скорость'])
+                this._doNext( 
+                    j,
+                    result, 
+                    count + 1,
+                    candidates,
+                    target1 - candidates[j]['Сила'], 
+                    target2 - candidates[j]['Стамина'], 
+                    target3 - candidates[j]['Скорость'],
+                    subArr
+                )
+                subArr.splice(subArr.length - 1, 1) 
+            }
+            /*candidates.forEach((key, value) => {
                 for (let j = i; j < value.length; j++) 
                 {
                     subArr.push(new Map())
@@ -79,7 +102,7 @@ class ExcelReader {
                     )
                     subArr.splice(subArr.length - 1, 1)
                 }
-            })
+            })*/
         }
         else if (target1 > 0 && target2 > 0 && target3 > 0 && count == 6)
         {
