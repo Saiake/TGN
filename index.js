@@ -23,6 +23,6 @@ bot.launch({
       domain: "https://telegram-bot-ms85.onrender.com",
   
       // Port to listen on; e.g.: 8080
-      port: 80,
+      port: 8080,
     },
   });
