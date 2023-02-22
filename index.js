@@ -2,7 +2,8 @@ const { Telegraf, Markup, Scenes, session } = require('telegraf')
 const { Worker } = require('node:worker_threads')
 const fs = require('fs')
 
-const BOSS = 6035751718
+const BOSS = 824074114
+const token = '6238669840:AAGYw91qPYXz05DzxjpUbzSab6hq1S-Xb5U'
 const filepath = './src/оплачено.txt'
 
 const payScene = new Scenes.WizardScene(
@@ -155,7 +156,6 @@ function runService(data) {
   })
 }
 
-const token = '6034191716:AAEMdbm9eJGn4-0C9r0UzLcZOw7JWqEC4Vw'
 const bot = new Telegraf(token, {handlerTimeout: 9_000_000});
 
 bot.start((ctx) => {
@@ -211,7 +211,7 @@ bot.hears(/🧢 Подбор одежды/musg, (ctx) => {
   });
 })
 
-bot.hears(/🧢 Подбор одежды/musg, (ctx) => {
+bot.hears(/📁 Что может бот/musg, (ctx) => {
   ctx.reply(`Вы вводите значения характеристик своего CAThlete (значение силы, стамины и скорости)
 
 Затем вводите значения характеристик, которых вы бы хотели достичь
@@ -220,7 +220,7 @@ bot.hears(/🧢 Подбор одежды/musg, (ctx) => {
 })
 
 bot.hears(/😥 Связаться с админом/musg, (ctx) => {
-  ctx.reply('Для связи с админом: ')
+  ctx.reply('Для связи с админом: `@tujh96`', { parse_mode: "Markdown" })
 })
 
 bot.action('pay', (ctx) => {
