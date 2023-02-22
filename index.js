@@ -159,7 +159,7 @@ function runService(data) {
 const bot = new Telegraf(token, {handlerTimeout: 9_000_000});
 
 bot.start((ctx) => {
-  ctx.reply('Send me ',
+  ctx.reply('Приветствуем, ' + ctx.message.chat.first_name + ' на нашем сервисе WalkenClothes!',
     Markup.keyboard(
       [
         '📋 Основная информация',
