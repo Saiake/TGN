@@ -29,7 +29,6 @@ function canBuy(candidates, params, wanted) {
     let result = []
     let subList = []
     _doNext(0, result, 0, candidates, sum[0], sum[1], sum[2], subList);
-    console.log('g')
     result = _sort(result)
     return result
 }
@@ -100,7 +99,6 @@ function _sort(unsorted) {
     })
     let j = 1;
     let resultCount = unsorted.length;
-    
     while (j < resultCount) 
     {
         if (unsorted[j]['price'] == unsorted[j - 1]['price'])
@@ -150,7 +148,7 @@ function _addPriceInUnsortedElements(unsortedWithoutPrice) {
     return unsortedWithoutPrice
 }
 
-const filename = './sales.xlsx'
+const filename = './src/sales.xlsx'
 
 const prices = getPrices(filename);
 const mainArray = getData(filename);
