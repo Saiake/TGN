@@ -110,6 +110,7 @@ const clothesScene = new Scenes.WizardScene(
       wanted.push(ctx.wizard.state.wpower)
       wanted.push(ctx.wizard.state.wstamina)
       wanted.push(ctx.wizard.state.wspeed)
+      ctx.reply('Секундочку, сейчас я подберу Вам варианты...')
       runService(
         {
           params: params, 
@@ -204,13 +205,27 @@ bot.hears(/🧢 Подбор одежды/musg, (ctx) => {
   });
 })
 
+bot.hears(/🧢 Подбор одежды/musg, (ctx) => {
+  ctx.reply(`Вы вводите значения характеристик своего CAThlete (значение силы, стамины и скорости)
+
+Затем вводите значения характеристик, которых вы бы хотели достичь
+  
+Бот подбирает вам одежду`)
+})
+
+bot.hears(/😥 Связаться с админом/musg, (ctx) => {
+  ctx.reply('Для связи с админом: ')
+})
+
 bot.action('pay', (ctx) => {
   ctx.scene.enter('payScene', {id: ctx.update.callback_query.from.id})
 })
 
 bot.action(/^\d+$/, (ctx) => {
-  fs.appendFileSync('./src/оплачено.txt', ctx.match[0] + '\n');
-  ctx.reply('Подтверждаю!')
+  if (ctx.message.from.id == BOSS) {
+    fs.appendFileSync('./src/оплачено.txt', ctx.match[0] + '\n');
+    ctx.reply('Подтверждаю!')
+  }
 })
 
 bot.action('clothes', (ctx) => {
@@ -223,7 +238,5 @@ bot.action('clothes', (ctx) => {
     }
   });
 })
-
-bot.hears('hi', (ctx) => ctx.reply('Hey there'));
 
 bot.launch();
