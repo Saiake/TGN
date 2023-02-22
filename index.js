@@ -115,18 +115,24 @@ const clothesScene = new Scenes.WizardScene(
         {
           params: params, 
           wanted: wanted
-        }).then(msg => {
-          ctx.reply(ctx.wizard.state.name + ' может надеть на себя:')
-          for (let i = 0; i < msg.result.length; i++) {
-            let message = ''
-            for (let j = 0; j < msg.result[i].length; j++) {
-              message = message + msg.result[i][j].get(0) + '-' + 
-                        msg.result[i][j].get(1) + '-' + 
-                        msg.result[i][j].get(2) + ' ' +
-                        msg.result[i][j].get('type') + ' '
+        }).then(async (msg) => {
+          if (msg.result.length == 0) {
+            ctx.reply('К сожалению, добиться такого результата невозможно, попробуйте ещё раз!')
+          } 
+          else {
+            await ctx.reply(ctx.wizard.state.name + ' может надеть на себя:')
+            for (let i = 0; i < msg.result.length; i++) {
+              let message = ''
+              for (let j = 0; j < msg.result[i].length; j++) {
+                message = message + msg.result[i][j].get(0) + '-' + 
+                          msg.result[i][j].get(1) + '-' + 
+                          msg.result[i][j].get(2) + ' ' +
+                          msg.result[i][j].get('type') + ' '
+              }
+              message = message + ' <b>~ Price</b> ' + msg.result[i]['price']
+              await ctx.replyWithHTML(message)
             }
-            message = message + ' <b>~ Price</b> ' + msg.result[i]['price']
-            ctx.replyWithHTML(message)
+            await ctx.reply('Примечание: Цена указана приблизительная, и приведена для сравнения в качестве ориентира на общую стоимость, она не всегда будет совпадать с действительной ценой на маркете! Рекомендуем зайти на маркет и промониторить цены в ручную.')
           }
         })
       return ctx.scene.leave()
